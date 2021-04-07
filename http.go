@@ -39,7 +39,11 @@ func (c *client) SetMethod(method string) *client {
 
 func (c *client) Run() (res []byte, err error) {
 	client := &http.Client{}
-	req, err := http.NewRequest(c.method, StrCombine(c.url, "?", c.query), nil)
+	if c.query != "" {
+		c.url = StrCombine(c.url, "?", c.query)
+	}
+	fmt.Println(c.url)
+	req, err := http.NewRequest(c.method, c.url, nil)
 	if err != nil {
 		return nil, err
 	}

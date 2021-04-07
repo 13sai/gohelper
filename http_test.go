@@ -7,7 +7,7 @@ import (
 )
 
 func TestPost(t *testing.T) {
-	http := gohelper.NewHttp("https://hotel.hznmd.com")
+	http := gohelper.NewHttp("https://www.baidu.com")
 	res, err := http.SetMethod("POST").Run()
 	t.Log(string(res), err)
 }
