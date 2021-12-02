@@ -1,4 +1,4 @@
-package gohelper
+package http
 
 import (
 	"fmt"
@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/13sai/gohelper/str"
 )
 
 type client struct {
@@ -16,11 +18,11 @@ type client struct {
 	timeout time.Duration
 }
 
-func NewHttp(url string) *client {
+func New(url string) *client {
 	return &client{timeout: 5 * time.Second, url: url}
 }
 
-func (c *client) SetQuery(params map[string]string) {
+func (c *client) Query(params map[string]string) {
 	query := ""
 	for k, v := range params {
 		query = fmt.Sprintf("%s%s=%s&", query, k, url.QueryEscape(v))
@@ -28,11 +30,11 @@ func (c *client) SetQuery(params map[string]string) {
 	c.query = query
 }
 
-func (c *client) SetTimeout(second int) {
+func (c *client) Timeout(second int) {
 	c.timeout = time.Second * time.Duration(second)
 }
 
-func (c *client) SetMethod(method string) *client {
+func (c *client) Method(method string) *client {
 	c.method = method
 	return c
 }
@@ -40,9 +42,8 @@ func (c *client) SetMethod(method string) *client {
 func (c *client) Run() (res []byte, err error) {
 	client := &http.Client{}
 	if c.query != "" {
-		c.url = StrCombine(c.url, "?", c.query)
+		c.url = str.StrCombine(c.url, "?", c.query)
 	}
-	fmt.Println(c.url)
 	req, err := http.NewRequest(c.method, c.url, nil)
 	if err != nil {
 		return nil, err

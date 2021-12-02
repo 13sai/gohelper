@@ -1,8 +1,9 @@
-package gohelper
+package str
 
 import (
 	"bytes"
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/hex"
 	"unicode/utf8"
 
@@ -48,4 +49,22 @@ func Md5(str string) string {
 // 生成唯一id
 func GetUUid() string {
 	return xid.New().String()
+}
+
+func Base64Encode(b []byte) string {
+	return base64.StdEncoding.EncodeToString(b)
+}
+
+func Base64Decode(s string) ([]byte, error) {
+	b, err := base64.StdEncoding.DecodeString(s)
+	return b, err
+}
+
+func Base64UrlEncode(b []byte) string {
+	return base64.URLEncoding.EncodeToString(b)
+}
+
+func Base64UrlDecode(s string) ([]byte, error) {
+	b, err := base64.URLEncoding.DecodeString(s)
+	return b, err
 }
