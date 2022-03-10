@@ -4,28 +4,48 @@ import (
 	"time"
 )
 
-// 2006-01-02 15:04:05 记住这一刻
+// 2006-01-02 15:04:05 remember the time
 
-// 获取周一时间
+const AMAZE_TIME = "2006-01-02 15:04:05"
+
+func DateTimeToTimeStamp(dateTime, format string) int64 {
+	t, _ := time.ParseInLocation(format, dateTime, time.Local)
+	return t.Unix()
+}
+
+func TimeStampToDateTime(ts int64, format string) string {
+	return time.Unix(ts, 0).Format(format)
+}
+
 func GetMonday(t time.Time) time.Time {
 	offset := int(time.Monday - t.Weekday())
 	if offset > 0 {
 		offset = -6
 	}
-	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.Local).AddDate(0, 0, offset)
+
+	year, month, day := t.Date()
+	return time.Date(year, month, day+offset, 0, 0, 0, 0, time.Local)
 }
 
-//获取传入的时间所在月份的第一天
 func GetFirstDayOfMonth(t time.Time) time.Time {
-	return t.AddDate(0, 0, -t.Day()+1)
+	year, month, _ := t.Date()
+	return time.Date(year, month, 1, 0, 0, 0, 0, time.Local)
 }
 
-//获取传入的时间所在月份的最后一天
 func GetLastDayOfMonth(t time.Time) time.Time {
-	return GetFirstDayOfMonth(t).AddDate(0, 1, -1)
+	year, month, _ := t.Date()
+	return time.Date(year, month+1, 0, 0, 0, 0, 0, time.Local)
 }
 
-//获取某一天的0点时间
+func GetFirstDayOfYear(t time.Time) time.Time {
+	return time.Date(t.Year(), 1, 1, 0, 0, 0, 0, time.Local)
+}
+
+func GetLastDayOfYear(t time.Time) time.Time {
+	return time.Date(t.Year()+1, 1, 0, 0, 0, 0, 0, time.Local)
+}
+
 func GetZero(t time.Time) time.Time {
-	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
+	year, month, day := t.Date()
+	return time.Date(year, month, day, 0, 0, 0, 0, t.Location())
 }

@@ -10,13 +10,11 @@ import (
 	"github.com/rs/xid"
 )
 
-// 字符串长度utf8
-func StrLen(str string) int {
+func Len(str string) int {
 	return utf8.RuneCountInString(str)
 }
 
-// 截取字符串
-func StrSub(str string, sub ...int) string {
+func Sub(str string, sub ...int) string {
 	start := sub[0]
 	length := 0
 	if len(sub) > 1 {
@@ -29,17 +27,14 @@ func StrSub(str string, sub ...int) string {
 	return string(([]rune(str))[start:length])
 }
 
-// 合并字符串
-func StrCombine(str ...string) string {
+func Combine(str ...string) string {
 	var bt bytes.Buffer
 	for _, arg := range str {
 		bt.WriteString(arg)
 	}
-	//获得拼接后的字符串
 	return bt.String()
 }
 
-// md5加密
 func Md5(str string) string {
 	h := md5.New()
 	h.Write([]byte(str))
@@ -51,20 +46,20 @@ func GetUUid() string {
 	return xid.New().String()
 }
 
-func Base64Encode(b []byte) string {
-	return base64.StdEncoding.EncodeToString(b)
+func Base64Encode(s string) string {
+	return base64.StdEncoding.EncodeToString([]byte(s))
 }
 
-func Base64Decode(s string) ([]byte, error) {
-	b, err := base64.StdEncoding.DecodeString(s)
-	return b, err
+func Base64Decode(s string) string {
+	b, _ := base64.StdEncoding.DecodeString(s)
+	return string(b)
 }
 
-func Base64UrlEncode(b []byte) string {
-	return base64.URLEncoding.EncodeToString(b)
+func Base64UrlEncode(s string) string {
+	return base64.URLEncoding.EncodeToString([]byte(s))
 }
 
-func Base64UrlDecode(s string) ([]byte, error) {
-	b, err := base64.URLEncoding.DecodeString(s)
-	return b, err
+func Base64UrlDecode(s string) string {
+	b, _ := base64.URLEncoding.DecodeString(s)
+	return string(b)
 }
