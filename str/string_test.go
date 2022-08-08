@@ -14,9 +14,9 @@ func TestStrSub(t *testing.T) {
 	t.Log("你好啊！", Sub("你好啊！", 2, 10))
 }
 
-func TestStrCombine(t *testing.T) {
-	t.Log("hello+world=", Combine("hello", "world"))
-	t.Log("你好啊+13sai=", Combine("你好啊", "13sai"))
+func TestStrConcat(t *testing.T) {
+	t.Log("hello+world=", Concat("hello", "world"))
+	t.Log("你好啊+13sai=", Concat("你好啊", "13sai"))
 }
 
 func TestMd5(t *testing.T) {

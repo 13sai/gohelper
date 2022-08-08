@@ -1,10 +1,10 @@
 package str
 
 import (
-	"bytes"
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/hex"
+	"strings"
 	"unicode/utf8"
 
 	"github.com/rs/xid"
@@ -27,8 +27,8 @@ func Sub(str string, sub ...int) string {
 	return string(([]rune(str))[start:length])
 }
 
-func Combine(str ...string) string {
-	var bt bytes.Buffer
+func Concat(str ...string) string {
+	var bt strings.Builder
 	for _, arg := range str {
 		bt.WriteString(arg)
 	}
